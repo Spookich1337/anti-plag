@@ -1,7 +1,6 @@
 import hashlib
 import logging
-import time
-from typing import List, Dict
+from typing import Dict
 
 from server.app.database import run_query, run_write
 

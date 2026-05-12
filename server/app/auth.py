@@ -1,12 +1,11 @@
 import os
 import uuid
-from functools import wraps
 from typing import Optional
 
 from fastapi import APIRouter, Request, Form, HTTPException
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from itsdangerous import URLSafeTimedSerializer, BadSignature
+from itsdangerous import URLSafeTimedSerializer
 
 SECRET_KEY = os.getenv("SECRET_KEY", "supersecretkey12345")
 serializer = URLSafeTimedSerializer(SECRET_KEY)

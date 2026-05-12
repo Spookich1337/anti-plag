@@ -1,10 +1,9 @@
 import time
 import datetime
-from io import BytesIO
 from typing import Optional
 
 from fastapi import APIRouter, Request, Form, UploadFile, File, HTTPException
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from server.app.auth import get_current_user
