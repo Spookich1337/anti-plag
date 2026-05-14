@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,13 +33,13 @@ spec:
           httpGet:
             path: /
             port: 7687
-          failureTreshold: 30
+          failureThreshold: 30
           periodSeconds: 5
         
-        livlinessProbe:
+        livenessProbe:
           tcpSocket:
-            port: 7687
-          inititalDelaySeconds: 10
+            port: 7474
+          initialDelaySeconds: 10
           periodSeconds: 30
 ---
 apiVersion: v1
