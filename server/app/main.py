@@ -38,3 +38,7 @@ app.include_router(statistics.router)
 @app.get("/")
 async def root():
     return RedirectResponse(url="/dashboard", status_code=302)
+
+@app.get("/health")
+async def check():
+    return {"status":"ok"}
