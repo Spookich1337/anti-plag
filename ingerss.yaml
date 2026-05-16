@@ -4,6 +4,12 @@ metadata:
   name: moevm-anti-plag-ingress
   labels:
     app.kubernetes.io/name: moevm-anti-plag-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
 spec:
   rules:
   - host: anti-plag.ru
