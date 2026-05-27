@@ -1,5 +1,4 @@
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from io import BytesIO
 
 def test_import_page(auth_client):
@@ -13,7 +12,7 @@ def test_mass_upload_unauthorized(client):
 def test_mass_upload_success(auth_client):
     with (
         patch("server.app.routers.import_export.run_query") as mock_query,
-        patch("server.app.routers.import_export.run_write") as mock_write,
+        patch("server.app.routers.import_export.run_write"),
         patch("server.app.routers.import_export.process_docx") as mock_proc
         ):
         mock_query.return_value = [{"m": 0}]
@@ -40,7 +39,7 @@ def test_export_all(auth_client):
         assert response.headers["content-type"] == "application/json"
 
 def test_import_json_success(auth_client):
-    with patch("server.app.routers.import_export.run_write") as mock_write:
+    with patch("server.app.routers.import_export.run_write"):
         json_data = {
             "students": [{"id": 1, "name": "N", "surname": "S", "group": 101}],
             "reports": [{"id": 1, "title": "T"}],

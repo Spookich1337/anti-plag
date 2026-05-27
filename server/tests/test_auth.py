@@ -1,4 +1,3 @@
-import pytest
 
 def test_login_page_unauthenticated(client):
     response = client.get("/login")

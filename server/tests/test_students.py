@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 
 def test_students_list(auth_client):
@@ -27,7 +26,7 @@ def test_students_list_filters(auth_client):
 
 def test_create_student(auth_client):
     with patch("server.app.routers.students.run_query") as mock_query, \
-         patch("server.app.routers.students.run_write") as mock_write:
+         patch("server.app.routers.students.run_write"):
         mock_query.return_value = [{"max_id": 0}]
         response = auth_client.post("/students/new", data={"name": "Petr", "surname": "Petrov", "group": 102}, follow_redirects=False)
         assert response.status_code == 302
@@ -55,13 +54,13 @@ def test_edit_student_page(auth_client):
         assert response.status_code == 200
 
 def test_edit_student_submit(auth_client):
-    with patch("server.app.routers.students.run_write") as mock_write:
+    with patch("server.app.routers.students.run_write"):
         response = auth_client.post("/students/1/edit", data={"name": "Ivan", "surname": "Ivanov", "group": 105}, follow_redirects=False)
         assert response.status_code == 302
         assert response.headers["location"] == "/students/1"
 
 def test_delete_student(auth_client):
-    with patch("server.app.routers.students.run_write") as mock_write:
+    with patch("server.app.routers.students.run_write"):
         response = auth_client.post("/students/1/delete", follow_redirects=False)
         assert response.status_code == 302
         assert response.headers["location"] == "/students/"

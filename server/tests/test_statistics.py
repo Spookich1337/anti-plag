@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 
 def test_statistics_page_success(auth_client):

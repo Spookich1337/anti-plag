@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 
 def test_plagiarism_page_success(auth_client):

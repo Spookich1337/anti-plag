@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 
 def test_seed_data_skips_if_exists():
