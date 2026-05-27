@@ -1,7 +1,7 @@
 import json
 import time
 from io import BytesIO
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Request, UploadFile, File, Form
 from fastapi.responses import RedirectResponse, JSONResponse, StreamingResponse
@@ -26,13 +26,22 @@ async def import_page(request: Request):
 @router.post("/import/upload")
 async def mass_upload(
     request: Request,
-    files: List[UploadFile] = File(...),
-    default_group: int = Form(3341),
-    default_subject: str = Form("Программирование"),
 ):
     user = get_current_user(request)
     if not user:
         return JSONResponse({"error": "unauthorized"}, status_code=401)
+
+    form_data = await request.form()
+    
+    try:
+        default_group = int(form_data.get("default_group", 3341))
+        default_subject = form_data.get("default_subject", "Программирование")
+    except (ValueError, TypeError):
+        return JSONResponse({"error": "Invalid default_group format"}, status_code=400)
+
+    files = form_data.getlist("files")
+    if not files:
+        return JSONResponse({"error": "No files uploaded"}, status_code=400)
 
     results = []
     for f in files:

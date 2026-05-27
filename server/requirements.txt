@@ -9,3 +9,5 @@ aiofiles==23.2.1
 starlette==0.37.2
 pydantic==2.7.1
 ruff
+pytest 
+httpx

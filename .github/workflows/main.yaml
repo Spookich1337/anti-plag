@@ -23,6 +23,9 @@ jobs:
       - name: run linter
         run: ruff check .
 
+      - name: run tests
+        run:  pytest server/tests/ -v
+
   build:
     runs-on: Ubuntu-24.04
     needs: lint_and_test

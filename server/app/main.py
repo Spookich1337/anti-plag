@@ -1,4 +1,5 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -15,9 +16,10 @@ logging.basicConfig(level=logging.INFO)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    wait_for_neo4j()
-    init_db()
-    seed_data()
+    if os.getenv("SKIP_DB_INIT") != "true":
+        wait_for_neo4j()
+        init_db()
+        seed_data()
     yield
 
 

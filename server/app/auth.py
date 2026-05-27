@@ -3,7 +3,7 @@ import uuid
 from typing import Optional
 
 from fastapi import APIRouter, Request, Form, HTTPException
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from itsdangerous import URLSafeTimedSerializer
 
@@ -58,10 +58,9 @@ async def login_page(request: Request):
 async def login_submit(request: Request, username: str = Form(...), password: str = Form(...)):
     user = USERS.get(username)
     if not user or user["password"] != password:
-        return templates.TemplateResponse(
-            "login.html",
-            {"request": request, "error": "Неверный логин или пароль"},
-            status_code=401,
+        return JSONResponse(
+            {"error": "Неверный логин или пароль"},
+            status_code=401
         )
     session_id = create_session(username)
     response = RedirectResponse(url="/", status_code=302)
