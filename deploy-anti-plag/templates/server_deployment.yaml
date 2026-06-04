@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.names.server}}
+spec:
+  replicas: {{.Values.server_replicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.names.server}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.names.server}}
+    spec:
+      containers:
+      - name: {{.Values.names.server}}
+
+        image: {{.Values.server_dockerhub.repo_name}}
+        imagePullPolicy: {{.Values.server_dockerhub.imagePullPolicy}}
+
+        env: 
+        {{- range .Values.env }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+
+        resources:
+          requests:
+            memory: {{.Values.resources.server_requests_memory}}
+            cpu: {{.Values.resources.server_requests_cpu}}
+          limits:
+            memory: {{.Values.resources.server_limit_memory}}
+            cpu: {{.Values.resources.server_limit_cpu}}
+
+        ports:
+        - containerPort: {{.Values.ports.server_port}}
+
+        livenessProbe:
+          httpGet:
+            path: {{.Values.health_url.server}}
+            port: {{.Values.ports.server_port}}
+          initialDelaySeconds: 5
+          periodSeconds: 30
+
+        readinessProbe:
+          httpGet:
+            path: {{.Values.health_url.server}}
+            port: {{.Values.ports.server_port}}
+          initialDelaySeconds: 5
+          periodSeconds: 30

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: moevm-anti-plag-service
+  name: {{.Values.names.server_service}}
 spec:
   selector:
-    app: moevm-anti-plag
+    app: {{.Values.names.server}}
   ports:
   - protocol: TCP
     name: bolt
     port: 80
-    targetPort: 8080
+    targetPort: {{.Values.ports.server_port}}
   type: ClusterIP

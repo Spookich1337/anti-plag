@@ -1,0 +1,40 @@
+version: v2
+
+
+names:
+  server: moevm-anti-plag
+  server_service: moevm-anti-plag-service
+
+
+server_replicas: 3
+
+
+server_dockerhub:
+  repo_name: spookich1337/anti-plag
+  version: latest
+  imagePullPolicy: Always
+
+
+resources:
+  server_requests_memory: "128Mi"
+  server_requests_cpu: "250m"
+  server_limit_memory: "256Mi"
+  server_limit_cpu: "500m"
+
+
+ports:
+  server_port: 8080
+
+
+health_url:
+  server: /health
+
+
+env: 
+  - name: NEO4J_URI
+    value: "bolt://moevm-anti-plag-db-service:7687"
+  - name: NEO4J_USER
+    value: "neo4j"
+  - name: NEO4J_PASSWORD
+    value: "password123"
+
