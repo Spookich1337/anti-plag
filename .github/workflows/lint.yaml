@@ -1,0 +1,23 @@
+name: linter
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: Ubuntu-24.04
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: set up python
+        uses: actions/setup-python@v5
+        with: 
+          python-version: "3.12"
+
+      - name: install ruff
+        run: pip install ruff
+
+      - name: run linter
+        run: ruff check .
