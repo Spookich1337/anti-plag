@@ -43,4 +43,4 @@ async def root():
 
 @app.get("/health")
 async def check():
-    return {"status":"ok"}
+    return {"status":"200"}
