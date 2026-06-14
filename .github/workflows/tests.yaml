@@ -6,19 +6,20 @@ on:
       - "pre-production"
 
 jobs:
-  steps:
+  test:
     runs-on: Ubuntu-24.04
-    
-    - name: checkout code
-      uses: actions/checkout@v4
 
-    - name: setup python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
+    steps:  
+      - name: checkout code
+        uses: actions/checkout@v4
 
-    - name: install requirements
-      run: pip install -r requirements.txt
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-    - name: run tests
-      run: pytest server/tests/ -v
+      - name: install requirements
+        run: pip install -r requirements.txt
+
+      - name: run tests
+        run: pytest server/tests/ -v
